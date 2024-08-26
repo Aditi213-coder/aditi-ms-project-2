@@ -1,0 +1,78 @@
+<div
+  class="modal fade"
+  id="actionModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 450px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ popupHeaderText }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="modalForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              id="name"
+              class="form-control"
+              formControlName="name"
+              type="text"
+            />
+            <div
+              *ngIf="
+                modalForm.get('name')?.invalid && modalForm.get('name')?.touched
+              "
+              class="text-danger"
+            >
+              Name is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="function" class="form-label">Select Function</label>
+            <select
+              id="function"
+              class="form-select"
+              formControlName="function"
+            >
+              <option value="" disabled>Select Function</option>
+              <option *ngFor="let function of functions" [value]="function">
+                {{ function }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                modalForm.get('function')?.invalid &&
+                modalForm.get('function')?.touched
+              "
+              class="text-danger"
+            >
+              Please select a function.
+            </div>
+          </div>
+          <!-- Dropdown for Select Column -->
+          <div class="mb-3">
+            <label>Select Columns</label>
+            <select formControlName="column" multiple class="form-control">
+              <option *ngFor="let colDef of colDefs" [value]="colDef.field">
+                {{ colDef.headerName }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
